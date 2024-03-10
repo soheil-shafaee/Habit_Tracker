@@ -4,6 +4,7 @@ import sys
 from signup import SignUp
 from add_pixel import AddPixel
 
+
 class Login(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
