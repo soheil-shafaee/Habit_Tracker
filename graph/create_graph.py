@@ -2,11 +2,35 @@ from PyQt5.QtWidgets import QMainWindow, QLineEdit, QRadioButton, QPushButton, Q
 from PyQt5 import uic
 import requests
 
-from add_pixel import AddPixel
-from database import session, Graph
+from .add_pixel import AddPixel
+from database.database import session, Graph
 
 
 class CreateGraph(QMainWindow):
+    """
+    This class represents the Create Graph window of the application. It handles the creation of a new graph
+    by interacting with the Pixela API and storing the graph details in the local database.
+
+    Attributes:
+        pixel_page (AddPixel): The next window to open after creating a graph.
+        user_owner_id (int): The ID of the user who owns the graph.
+        create_graph_button (QPushButton): Button to trigger the graph creation process.
+        graph_id_create (QLineEdit): Input field for the graph ID.
+        graph_name_create (QLineEdit): Input field for the graph name.
+        username_graph_create (QLineEdit): Input field for the username.
+        unit_graph_create (QLineEdit): Input field for the graph unit.
+        green (QRadioButton): Radio button for selecting green color.
+        yellow (QRadioButton): Radio button for selecting yellow color.
+        red (QRadioButton): Radio button for selecting red color.
+        purple (QRadioButton): Radio button for selecting purple color.
+        blue (QRadioButton): Radio button for selecting blue color.
+        black (QRadioButton): Radio button for selecting black color.
+        username_graph (str): The username for the graph creation.
+        password_graph (str): The token for the graph creation.
+
+    Methods:
+        graph_created(): Handles the creation of a graph by interacting with the Pixela API and saving the graph details in the local database.
+    """
     def __init__(self, username_signup, token_signup, user_id):
         super(QMainWindow, self).__init__()
 
@@ -44,7 +68,10 @@ class CreateGraph(QMainWindow):
         self.show()
 
     def graph_created(self):
-        """Function For Create Graph"""
+        """
+        Function For Creating a Graph by interacting with the Pixela API and saving the graph details
+        in the local database.
+        """
         if self.green.isChecked():
             color = "shibafu"
         elif self.yellow.isChecked():

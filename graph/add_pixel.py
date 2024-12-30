@@ -2,10 +2,30 @@ from PyQt5.QtWidgets import QMainWindow, QLineEdit, QPushButton
 from PyQt5 import uic
 from datetime import datetime
 import requests
-from link_page import LinkPage
+from .link_page import LinkPage
 
 
 class AddPixel(QMainWindow):
+    """
+    This class represents the Add Pixel window of the application. It handles the addition of a pixel to a graph
+    by interacting with the Pixela API.
+
+    Attributes:
+        link_page (LinkPage): The next window to open after adding a pixel.
+        add_pixel (QPushButton): Button to trigger the addition of a pixel.
+        graph_id_add_pixel (QLineEdit): Input field for the graph ID.
+        graph_name_add_pixel (QLineEdit): Input field for the graph name.
+        date_add_pixel (QLineEdit): Input field for the date.
+        quantity_add_pixel (QLineEdit): Input field for the quantity of the pixel.
+        username_graph (str): The username for the graph.
+        token_graph (str): The token for the graph.
+        graph_id_graph (str): The ID of the graph.
+        graph_name_graph (str): The name of the graph.
+        datetime_now (str): The current date in the format YYYYMMDD.
+
+    Methods:
+        click_add_pixel(): Handles the addition of a pixel by sending data to the Pixela API.
+    """
     def __init__(self, username_add_pixel, token_add_pixel, graph_id_add_pixel, graph_name_add_pixel):
         super(QMainWindow, self).__init__()
 
@@ -42,7 +62,9 @@ class AddPixel(QMainWindow):
         self.show()
 
     def click_add_pixel(self):
-        """Send Data To our Graph"""
+        """
+        Function to send data to the Pixela API for adding a pixel to the graph.
+        """
         quantity = self.quantity_add_pixel.text()
         try:
             URL = f"https://pixe.la/v1/users/{self.username_graph}/graphs/{self.graph_id_graph}"
