@@ -1,15 +1,31 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit, QCommandLinkButton, QMessageBox
 from PyQt5 import uic, QtGui
 import sys
-import requests
 
-from signup import SignUp
-from choose_graph import ChooseGraph
-from database import Users, session
-from token_hashing import hashing_password
+from .signup import SignUp
+from graph.choose_graph import ChooseGraph
+from database.database import Users, session
+from .token_hashing import hashing_password
 
 
 class Login(QMainWindow):
+    """This class represents the login window of the application. It handles user authentication,
+    provides navigation to the registration window, and manages the visibility of the password field.
+
+    Attributes:
+        signup (SignUp): An instance of the SignUp class for user registration.
+        choose_graph (ChooseGraph): An instance of the ChooseGraph class for navigating to the graph section.
+        login_button (QPushButton): The button to initiate the login process.
+        link_register (QCommandLinkButton): The button to navigate to the registration window.
+        username_login (QLineEdit): The input field for the username.
+        password_login (QLineEdit): The input field for the password.
+        hide_show_password (QPushButton): The button to toggle password visibility.
+
+    Methods:
+        __init__(): Initializes the login window, loads the UI, and sets up the widgets.
+        register(): Navigates to the registration window.
+        graph_section(): Authenticates the user and navigates to the graph section upon successful login.
+        visibility_password(): Toggles the visibility of the password input field."""
     def __init__(self):
         super(QMainWindow, self).__init__()
 
@@ -45,7 +61,7 @@ class Login(QMainWindow):
     def graph_section(self):
         """Function For login"""
         msg_login = QMessageBox()
-        msg_login.setWindowIcon(QtGui.QIcon("images/monster.png"))
+        msg_login.setWindowIcon(QtGui.QIcon("../images/monster.png"))
         msg_login.setIcon(QMessageBox.Critical)
         if len(self.username_login.text()) == 0 or len(self.password_login.text()) == 0:
             msg_login.setWindowTitle("Field Empty")

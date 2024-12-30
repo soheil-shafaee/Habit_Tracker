@@ -5,13 +5,14 @@ import requests
 from PyQt5 import uic, QtGui
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLineEdit, QPushButton, QRadioButton, QMessageBox, QLabel
 
-from create_graph import CreateGraph
-from database import Users, session
-from token_hashing import hashing_password
+from graph.create_graph import CreateGraph
+from database.database import Users, session
+from .token_hashing import hashing_password
 
 
 # ------- Validate Email Section -------
 def validate_email(email):
+    """This function make sure email of the users is validated or not"""
     if re.match(r"[^@]+@[^@]+\.[^@]+", email):
         return True
     return False
@@ -20,6 +21,24 @@ def validate_email(email):
 # ----------- SignUp Section ----------
 
 class SignUp(QMainWindow):
+    """
+    This class represent Sing up window of application. It handles create user into database and
+    post request for creating user into Api, validate the user email, terms info, visibility of password,
+
+    Attributes:
+        signup(QPushButton): Creating new user in database and API.
+        hide_show_password(QPushButton): The button to toggle password visibility.
+        username_create(QLineEdit): Username that user put for account.
+        password_create(QLineEdit): Password that user put for account.
+        email_create(QLineEdit): Email that user put for account.
+        agree_terms_create(QRadioButton): Check user read the terms of service.
+        agree_terms_text(QLabel): The text of terms service.
+        graph (CreateGraph): An instance of the CreateGraph class for navigating to the graph section.
+
+    Methods:
+        __init__(): Initializes the sign-up window, loads the UI, and sets up the widgets.
+        create_new_user(): Creates a new user, saves the user to the database, and sends a POST request to the API.
+        """
     def __init__(self):
         super(QMainWindow, self).__init__()
 
@@ -50,13 +69,16 @@ class SignUp(QMainWindow):
         self.show()
 
     def create_new_user(self):
-        """Create user and Save into Database"""
+        """
+        Creates a new user and saves the user into the database. It also sends a POST request to
+        an external API for user creation. The function validates the user input fields, checks if
+        the terms of service are agreed upon, and handles any errors that might occur during the process."""
         name = self.username_create.text()
         f_token = self.password_create.text()
         email = self.email_create.text()
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Critical)
-        msg_box.setWindowIcon(QtGui.QIcon("images/monster.png"))
+        msg_box.setWindowIcon(QtGui.QIcon("../images/monster.png"))
         if len(name) != 0 and len(f_token) != 0 and len(email) != 0:
             if len(f_token) <= 8:
                 msg_box.setWindowTitle("Password ERROR")
@@ -112,6 +134,9 @@ class SignUp(QMainWindow):
             msg_box.exec_()
 
     def visibility_password(self):
+        """
+        Toggles the visibility of the password input field. If the password is currently visible,
+        it hides it, and if it is currently hidden, it makes it visible."""
         if self.password_create.echoMode() == QLineEdit.Normal:
             self.password_create.setEchoMode(QLineEdit.Password)
         else:
